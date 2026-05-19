@@ -136,6 +136,20 @@ table tr:hover{
     font-size:13px;
 }
 
+.hapus{
+    background:#ef4444;
+    color:white;
+    border:none;
+    padding:8px 14px;
+    border-radius:8px;
+    cursor:pointer;
+    width:auto;
+}
+
+.hapus:hover{
+    background:#dc2626;
+}
+
 @media(max-width:768px){
 
     .title h1{
@@ -177,7 +191,7 @@ table tr:hover{
             <textarea id="keperluan" placeholder="Masukkan keperluan"></textarea>
         </div>
 
-        <button onclick="tambahData()">
+        <button type="button" onclick="tambahData()">
             Simpan Buku Tamu
         </button>
 
@@ -201,6 +215,7 @@ table tr:hover{
                         <th>Asal</th>
                         <th>Keperluan</th>
                         <th>Status</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
 
@@ -213,6 +228,11 @@ table tr:hover{
                         <td>Konsultasi Sistem</td>
                         <td>
                             <span class="badge">Hadir</span>
+                        </td>
+                        <td>
+                            <button class="hapus" onclick="hapusData(this)">
+                                Hapus
+                            </button>
                         </td>
                     </tr>
 
@@ -228,11 +248,20 @@ table tr:hover{
 
 <script>
 
+let sedangProses = false;
+
 function tambahData(){
 
-    let nama = document.getElementById("nama").value;
-    let asal = document.getElementById("asal").value;
-    let keperluan = document.getElementById("keperluan").value;
+    // supaya tidak double klik
+    if(sedangProses){
+        return;
+    }
+
+    sedangProses = true;
+
+    let nama = document.getElementById("nama").value.trim();
+    let asal = document.getElementById("asal").value.trim();
+    let keperluan = document.getElementById("keperluan").value.trim();
 
     let tabel = document.getElementById("tabelTamu").getElementsByTagName('tbody')[0];
 
@@ -241,6 +270,7 @@ function tambahData(){
     if(nama == "" || asal == "" || keperluan == ""){
 
         alert("Semua form wajib diisi!");
+        sedangProses = false;
         return;
     }
 
@@ -254,6 +284,11 @@ function tambahData(){
         <td>${asal}</td>
         <td>${keperluan}</td>
         <td><span class="badge">Hadir</span></td>
+        <td>
+            <button class="hapus" onclick="hapusData(this)">
+                Hapus
+            </button>
+        </td>
     `;
 
     // reset form
@@ -267,6 +302,36 @@ function tambahData(){
     setTimeout(function(){
         success.style.display = "none";
     }, 3000);
+
+    setTimeout(function(){
+        sedangProses = false;
+    }, 500);
+
+}
+
+// fungsi hapus
+function hapusData(button){
+
+    if(confirm("Yakin ingin menghapus data ini?")){
+
+        let row = button.parentNode.parentNode;
+
+        row.remove();
+
+        updateNomor();
+    }
+
+}
+
+// update nomor otomatis
+function updateNomor(){
+
+    let tabel = document.getElementById("tabelTamu").getElementsByTagName('tbody')[0];
+
+    for(let i = 0; i < tabel.rows.length; i++){
+
+        tabel.rows[i].cells[0].innerHTML = i + 1;
+    }
 
 }
 
