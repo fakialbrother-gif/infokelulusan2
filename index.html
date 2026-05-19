@@ -3,166 +3,272 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Info Kelulusan</title>
+<title>Buku Tamu Digital</title>
 
 <style>
 
-body{
+*{
     margin:0;
     padding:0;
+    box-sizing:border-box;
     font-family:Arial, sans-serif;
+}
+
+body{
     background:#0f172a;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
+    min-height:100vh;
+    padding:40px 20px;
 }
 
-.box{
-    width:400px;
-    background:white;
-    padding:30px;
-    border-radius:15px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+.container{
+    max-width:1000px;
+    margin:auto;
 }
 
-h1{
+.title{
     text-align:center;
-    color:#2563eb;
+    color:white;
+    margin-bottom:30px;
 }
 
-input{
+.title h1{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+.title p{
+    color:#cbd5e1;
+}
+
+.card{
+    background:white;
+    border-radius:15px;
+    padding:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.2);
+    margin-bottom:30px;
+}
+
+.form-group{
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:bold;
+    color:#334155;
+}
+
+input, textarea{
     width:100%;
     padding:12px;
-    margin-top:10px;
-    border:1px solid #ccc;
-    border-radius:8px;
-    font-size:16px;
+    border:1px solid #cbd5e1;
+    border-radius:10px;
+    font-size:15px;
+    outline:none;
+}
+
+textarea{
+    resize:none;
+    height:120px;
+}
+
+input:focus,
+textarea:focus{
+    border-color:#2563eb;
 }
 
 button{
     width:100%;
-    padding:12px;
-    margin-top:15px;
+    padding:14px;
     border:none;
     background:#2563eb;
     color:white;
     font-size:16px;
-    border-radius:8px;
+    border-radius:10px;
     cursor:pointer;
+    transition:0.3s;
 }
 
 button:hover{
     background:#1d4ed8;
 }
 
-#hasil{
-    margin-top:20px;
+.success{
+    background:#dcfce7;
+    color:#166534;
     padding:15px;
     border-radius:10px;
+    margin-bottom:20px;
     display:none;
 }
 
-.sukses{
-    background:#dcfce7;
-    color:#166534;
+.table-box{
+    overflow-x:auto;
 }
 
-.gagal{
-    background:#fee2e2;
-    color:#991b1b;
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+table th{
+    background:#2563eb;
+    color:white;
+    padding:14px;
+    text-align:left;
+}
+
+table td{
+    padding:14px;
+    border-bottom:1px solid #e2e8f0;
+}
+
+table tr:hover{
+    background:#f8fafc;
+}
+
+.badge{
+    background:#22c55e;
+    color:white;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:13px;
+}
+
+@media(max-width:768px){
+
+    .title h1{
+        font-size:30px;
+    }
+
 }
 
 </style>
 </head>
 <body>
 
-<div class="box">
+<div class="container">
 
-    <h1>INFO KELULUSAN</h1>
+    <div class="title">
+        <h1>BUKU TAMU DIGITAL</h1>
+        <p>Silahkan isi buku tamu di bawah ini</p>
+    </div>
 
-    <input type="text" id="nisn" placeholder="Masukkan NISN">
+    <!-- FORM -->
+    <div class="card">
 
-    <button id="btnCek">
-        CEK KELULUSAN
-    </button>
+        <div class="success" id="success">
+            ✅ Data berhasil ditambahkan
+        </div>
 
-    <div id="hasil"></div>
+        <div class="form-group">
+            <label>Nama</label>
+            <input type="text" id="nama" placeholder="Masukkan nama">
+        </div>
+
+        <div class="form-group">
+            <label>Asal / Instansi</label>
+            <input type="text" id="asal" placeholder="Masukkan asal">
+        </div>
+
+        <div class="form-group">
+            <label>Keperluan</label>
+            <textarea id="keperluan" placeholder="Masukkan keperluan"></textarea>
+        </div>
+
+        <button onclick="tambahData()">
+            Simpan Buku Tamu
+        </button>
+
+    </div>
+
+    <!-- TABEL -->
+    <div class="card">
+
+        <h2 style="margin-bottom:20px; color:#1e293b;">
+            Data Tamu
+        </h2>
+
+        <div class="table-box">
+
+            <table id="tabelTamu">
+
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Asal</th>
+                        <th>Keperluan</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>1</td>
+                        <td>Faki</td>
+                        <td>SMK Yabhinka</td>
+                        <td>Konsultasi Sistem</td>
+                        <td>
+                            <span class="badge">Hadir</span>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
 
 </div>
 
 <script>
 
-document.getElementById("btnCek").addEventListener("click", function(){
+function tambahData(){
 
-    let nisn = document.getElementById("nisn").value;
-    let hasil = document.getElementById("hasil");
+    let nama = document.getElementById("nama").value;
+    let asal = document.getElementById("asal").value;
+    let keperluan = document.getElementById("keperluan").value;
 
-    // DATA SISWA
-    let dataSiswa = {
+    let tabel = document.getElementById("tabelTamu").getElementsByTagName('tbody')[0];
 
-        "123456": {
-            nama: "Faki Al Brother",
-            kelas: "XII RPL 1",
-            status: "LULUS"
-        },
+    let success = document.getElementById("success");
 
-        "789101": {
-            nama: "Budi Santoso",
-            kelas: "XII TKJ 2",
-            status: "TIDAK LULUS"
-        }
+    if(nama == "" || asal == "" || keperluan == ""){
 
-    };
-
-    // JIKA KOSONG
-    if(nisn == ""){
-
-        hasil.style.display = "block";
-        hasil.className = "gagal";
-
-        hasil.innerHTML = "Masukkan NISN terlebih dahulu";
-
+        alert("Semua form wajib diisi!");
         return;
     }
 
-    // CEK DATA
-    if(dataSiswa[nisn]){
+    let nomor = tabel.rows.length + 1;
 
-        let siswa = dataSiswa[nisn];
+    let row = tabel.insertRow();
 
-        hasil.style.display = "block";
+    row.innerHTML = `
+        <td>${nomor}</td>
+        <td>${nama}</td>
+        <td>${asal}</td>
+        <td>${keperluan}</td>
+        <td><span class="badge">Hadir</span></td>
+    `;
 
-        if(siswa.status == "LULUS"){
+    // reset form
+    document.getElementById("nama").value = "";
+    document.getElementById("asal").value = "";
+    document.getElementById("keperluan").value = "";
 
-            hasil.className = "sukses";
+    // notif
+    success.style.display = "block";
 
-            hasil.innerHTML =
-            "<h2>🎉 SELAMAT ANDA LULUS</h2>" +
-            "<p><b>Nama:</b> " + siswa.nama + "</p>" +
-            "<p><b>Kelas:</b> " + siswa.kelas + "</p>" +
-            "<p><b>Status:</b> " + siswa.status + "</p>";
+    setTimeout(function(){
+        success.style.display = "none";
+    }, 3000);
 
-        }else{
-
-            hasil.className = "gagal";
-
-            hasil.innerHTML =
-            "<h2>❌ ANDA TIDAK LULUS</h2>" +
-            "<p><b>Nama:</b> " + siswa.nama + "</p>" +
-            "<p><b>Kelas:</b> " + siswa.kelas + "</p>" +
-            "<p><b>Status:</b> " + siswa.status + "</p>";
-        }
-
-    }else{
-
-        hasil.style.display = "block";
-        hasil.className = "gagal";
-
-        hasil.innerHTML = "Data tidak ditemukan";
-    }
-
-});
+}
 
 </script>
 
