@@ -1,235 +1,170 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Info Kelulusan</title>
-  <style>
-    *{
-        margin:0;
-        padding:0;
-        box-sizing:border-box;
-        font-family:'Segoe UI', sans-serif;
-    }
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Info Kelulusan</title>
 
-    body{
-        background: linear-gradient(135deg,#0f172a,#1e293b);
-        min-height:100vh;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        padding:20px;
-    }
+<style>
 
-    .container{
-        width:100%;
-        max-width:500px;
-        background:#fff;
-        border-radius:20px;
-        overflow:hidden;
-        box-shadow:0 10px 30px rgba(0,0,0,0.3);
-        animation:fade 0.7s ease;
-    }
+body{
+    margin:0;
+    padding:0;
+    font-family:Arial, sans-serif;
+    background:#0f172a;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
 
-    @keyframes fade{
-        from{
-            opacity:0;
-            transform:translateY(20px);
-        }
-        to{
-            opacity:1;
-            transform:translateY(0);
-        }
-    }
+.box{
+    width:400px;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+}
 
-    .header{
-        background:linear-gradient(135deg,#2563eb,#1d4ed8);
-        color:white;
-        text-align:center;
-        padding:30px 20px;
-    }
+h1{
+    text-align:center;
+    color:#2563eb;
+}
 
-    .header img{
-        width:90px;
-        margin-bottom:15px;
-    }
+input{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:16px;
+}
 
-    .header h1{
-        font-size:28px;
-        margin-bottom:8px;
-    }
+button{
+    width:100%;
+    padding:12px;
+    margin-top:15px;
+    border:none;
+    background:#2563eb;
+    color:white;
+    font-size:16px;
+    border-radius:8px;
+    cursor:pointer;
+}
 
-    .header p{
-        font-size:14px;
-        opacity:0.9;
-    }
+button:hover{
+    background:#1d4ed8;
+}
 
-    .content{
-        padding:30px;
-    }
+#hasil{
+    margin-top:20px;
+    padding:15px;
+    border-radius:10px;
+    display:none;
+}
 
-    .form-group{
-        margin-bottom:20px;
-    }
+.sukses{
+    background:#dcfce7;
+    color:#166534;
+}
 
-    label{
-        display:block;
-        margin-bottom:8px;
-        font-weight:600;
-        color:#334155;
-    }
+.gagal{
+    background:#fee2e2;
+    color:#991b1b;
+}
 
-    input{
-        width:100%;
-        padding:14px;
-        border:2px solid #cbd5e1;
-        border-radius:12px;
-        outline:none;
-        transition:0.3s;
-        font-size:15px;
-    }
-
-    input:focus{
-        border-color:#2563eb;
-        box-shadow:0 0 10px rgba(37,99,235,0.2);
-    }
-
-    button{
-        width:100%;
-        padding:14px;
-        border:none;
-        border-radius:12px;
-        background:linear-gradient(135deg,#2563eb,#1d4ed8);
-        color:white;
-        font-size:16px;
-        font-weight:bold;
-        cursor:pointer;
-        transition:0.3s;
-    }
-
-    button:hover{
-        transform:scale(1.02);
-    }
-
-    button:active{
-        transform:scale(0.98);
-    }
-
-    .result{
-        margin-top:25px;
-        padding:20px;
-        border-radius:15px;
-        display:none;
-        animation:fade 0.5s ease;
-    }
-
-    .lulus{
-        background:#dcfce7;
-        border:2px solid #22c55e;
-        color:#166534;
-    }
-
-    .tidak{
-        background:#fee2e2;
-        border:2px solid #ef4444;
-        color:#991b1b;
-    }
-
-    .result h2{
-        margin-bottom:10px;
-        font-size:18px;
-    }
-
-    .result p{
-        margin:8px 0;
-        font-size:14px;
-    }
-
-    .footer{
-        text-align:center;
-        padding:15px;
-        background:#f8fafc;
-        font-size:13px;
-        color:#64748b;
-    }
-
-    @media(max-width:500px){
-        .content{
-            padding:20px;
-        }
-
-        .header h1{
-            font-size:22px;
-        }
-    }
 </style>
-  <style>body { box-sizing: border-box; }</style>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
-  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
-  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
- </head>
- <body>
-  <div class="container">
-   <div class="header"><img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png" alt="Logo">
-    <h1>Info Kelulusan</h1>
-    <p>SMK / SMA Tahun Ajaran 2025/2026</p>
-   </div>
-   <div class="content">
-    <div class="form-group"><label>Masukkan NISN</label> <input type="text" id="nisn" placeholder="Contoh: 1234567890">
-    </div><button onclick="cekKelulusan()">Cek Kelulusan</button>
+</head>
+<body>
+
+<div class="box">
+
+    <h1>INFO KELULUSAN</h1>
+
+    <input type="text" id="nisn" placeholder="Masukkan NISN">
+
+    <button id="btnCek">
+        CEK KELULUSAN
+    </button>
+
     <div id="hasil"></div>
-   </div>
-   <div class="footer">
-    © 2026 Sistem Informasi Kelulusan Sekolah
-   </div>
-  </div>
-  <script>
-function cekKelulusan(){
+
+</div>
+
+<script>
+
+document.getElementById("btnCek").addEventListener("click", function(){
 
     let nisn = document.getElementById("nisn").value;
     let hasil = document.getElementById("hasil");
 
-    // DATA CONTOH
-    let data = {
-        "1234567890": {
+    // DATA SISWA
+    let dataSiswa = {
+
+        "123456": {
             nama: "Faki Al Brother",
             kelas: "XII RPL 1",
             status: "LULUS"
         },
 
-        "9876543210": {
+        "789101": {
             nama: "Budi Santoso",
             kelas: "XII TKJ 2",
             status: "TIDAK LULUS"
         }
+
     };
 
-    if(nisn === ""){
-        hasil.innerHTML = '<div class="result tidak"><h2>⚠️ Peringatan</h2><p>Silakan masukkan NISN terlebih dahulu!</p></div>';
+    // JIKA KOSONG
+    if(nisn == ""){
+
         hasil.style.display = "block";
+        hasil.className = "gagal";
+
+        hasil.innerHTML = "Masukkan NISN terlebih dahulu";
+
         return;
     }
 
-    if(data[nisn]){
-        let siswa = data[nisn];
-        let statusClass = siswa.status === "LULUS" ? "lulus" : "tidak";
-        let icon = siswa.status === "LULUS" ? "✅" : "❌";
-        
-        hasil.innerHTML = `
-            <div class="result ${statusClass}">
-                <h2>${icon} ${siswa.status}</h2>
-                <p><strong>Nama:</strong> ${siswa.nama}</p>
-                <p><strong>Kelas:</strong> ${siswa.kelas}</p>
-                <p><strong>Status:</strong> ${siswa.status}</p>
-            </div>
-        `;
+    // CEK DATA
+    if(dataSiswa[nisn]){
+
+        let siswa = dataSiswa[nisn];
+
         hasil.style.display = "block";
-    } else {
-        hasil.innerHTML = '<div class="result tidak"><h2>❌ Tidak Ditemukan</h2><p>NISN tidak terdaftar dalam sistem. Silakan periksa kembali nomor NISN Anda.</p></div>';
+
+        if(siswa.status == "LULUS"){
+
+            hasil.className = "sukses";
+
+            hasil.innerHTML =
+            "<h2>🎉 SELAMAT ANDA LULUS</h2>" +
+            "<p><b>Nama:</b> " + siswa.nama + "</p>" +
+            "<p><b>Kelas:</b> " + siswa.kelas + "</p>" +
+            "<p><b>Status:</b> " + siswa.status + "</p>";
+
+        }else{
+
+            hasil.className = "gagal";
+
+            hasil.innerHTML =
+            "<h2>❌ ANDA TIDAK LULUS</h2>" +
+            "<p><b>Nama:</b> " + siswa.nama + "</p>" +
+            "<p><b>Kelas:</b> " + siswa.kelas + "</p>" +
+            "<p><b>Status:</b> " + siswa.status + "</p>";
+        }
+
+    }else{
+
         hasil.style.display = "block";
+        hasil.className = "gagal";
+
+        hasil.innerHTML = "Data tidak ditemukan";
     }
-}
+
+});
+
 </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9fe0683ef203b65f',t:'MTc3OTE2NTQ1NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+</body>
 </html>
